@@ -49,18 +49,18 @@ CHIP CPU {
         And(a=instruction[15],b=instruction[12],out=and1);
         Mux16(a=AR,b=inM,sel=and1,out=x2);
         
-        ALU(x=DR,y=x2,zx=instruction[11],nx=instruction[10],zy=instruction[9],ny=instruction[8],f=instruction[7],no=instruction[6],out=alu1,out=alu2,zr=zr,ng=ng);
+        ALU(x=DR,y=x2,zx=instruction[11],nx=instruction[10],zy=instruction[9],ny=instruction[8],f=instruction[7],no=instruction[6],out=alu1,out=outM,zr=zr,ng=ng);
 
         And(a=instruction[15],b=instruction[4],out=and2);
         DRegister(in=alu1,load=and2,out=DR);
 
-        And(a=instruction[15],b=instruction[3],out=and3);
+        And(a=instruction[15],b=instruction[3],out=writeM);
 
         Not(in=ng,out=notng);
         Not(in=zr,out=notzr);
         And(a=instruction[15],b=instruction[0],out=and4);
         And(a=notng,b=notzr,out=andngzr);
-        And(a=anand4dx,b=andngzr,out=andx);
+        And(a=and4,b=andngzr,out=andx);
 
         And(a=instruction[15],b=instruction[1],out=and5);
         And(a=and5,b=zr,out=andy);
